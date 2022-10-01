@@ -9,8 +9,9 @@ jobs:
     steps:
       - run: return 1
       - run: |
-          echo "hello error"
           when: on_fail
+          echo "hello error"
+          
 
 
 
