@@ -12,7 +12,11 @@ jobs:
       - run:
           name: "mario"
           command:
-            echo "hello world" > output.txt
+            echo "hello world" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
 
   print_output_file:
 
@@ -21,14 +25,19 @@ jobs:
 
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: "mafdy"
           command:
-            cat output.txt
+            cat ~/output.txt
 
 
 workflows:
   welcome:
     jobs:
-      - print_output_file
+      - save_hello_world_output
+      - print_output_file:
+          requires:
+            - save_hello_world_output
       
